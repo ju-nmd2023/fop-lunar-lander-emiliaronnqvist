@@ -1,19 +1,7 @@
-let x;
-let y;
-let speed;
-function setup() {
-  createCanvas(500, 500);
-  x = 250;
-  y = 450;
-  speed = 0;
-}
-
 noStroke();
-
+createCanvas(500, 500);
 // Following 28 lines are inspired by following youtube-tutorial https://www.youtube.com/watch?v=cl5FW_zgY_Q
-function draw() {
-  // background
-  background(0);
+function rocket(x, y) {
   // flames
   fill(255, 185, 0);
   ellipse(x, y + random(35, 55), 20, 60);
@@ -39,5 +27,31 @@ function draw() {
   ellipse(x, y - 10, 18, 20);
   fill(220, 221, 222);
   ellipse(x + 4, y - 10, 5, 8);
+}
 
-  y = y - speed;
+let x = 250;
+let y = 250;
+let speed = 0;
+let acceleration = 0;
+
+function draw() {
+  // background
+  background(0);
+  rocket(x, y);
+
+  y = y - speed * acceleration;
+
+  if (keyIsDown(40)) {
+    acceleration = 3;
+    speed = 6;
+  } else {
+    acceleration = -2;
+    speed = 3;
+  }
+    else if (y > 450) {
+        acceleration = 0;
+        speed = 0;
+    }
+  }
+
+
