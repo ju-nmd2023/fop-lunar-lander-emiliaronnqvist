@@ -2,11 +2,6 @@ noStroke();
 createCanvas(500, 500);
 // Following 28 lines are inspired by following youtube-tutorial https://www.youtube.com/watch?v=cl5FW_zgY_Q
 function rocket(x, y) {
-  // flames
-  fill(255, 185, 0);
-  ellipse(x, y + random(35, 55), 20, 60);
-  fill(255, 255, 0);
-  ellipse(x, y + random(35, 50), 15, 40);
   // side fins
   fill(194, 116, 185);
   arc(x, y + 35, 60, 40, PI, 0);
@@ -28,6 +23,13 @@ function rocket(x, y) {
   fill(220, 221, 222);
   ellipse(x + 4, y - 10, 5, 8);
 }
+//flames
+function flames(x, y) {
+  fill(255, 185, 0);
+  ellipse(x, y + random(35, 55), 20, 60);
+  fill(255, 255, 0);
+  ellipse(x, y + random(35, 50), 15, 40);
+}
 
 let x = 250;
 let y = 250;
@@ -35,6 +37,11 @@ let velocity = 0;
 let acceleration = 0;
 let gravity = 0.1;
 let thrust = 0.4;
+let victory = false;
+
+if (!victory) {
+  flames(x, y);
+}
 
 function draw() {
   // background
@@ -45,17 +52,18 @@ function draw() {
 
   y += velocity;
 
-  if (keyIsDown(40)) {
+  if (keyIsDown(40) && y < 450) {
     acceleration = -thrust;
+    victory = false;
   } else {
     acceleration = gravity;
   }
 
-  if ((y = 460 && velocity < 1)) {
-    acceleration = 0;
-    gravity = 0;
-    thrust = 0;
+  if (y >= 450 && velocity < 1) {
+    y = 450;
     velocity = 0;
+    // remove flames
+    victory = true;
   }
 }
 
