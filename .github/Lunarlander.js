@@ -31,27 +31,39 @@ function rocket(x, y) {
 
 let x = 250;
 let y = 250;
-let speed = 0;
+let velocity = 0;
 let acceleration = 0;
+let gravity = 0.1;
+let thrust = 0.4;
 
 function draw() {
   // background
   background(0);
   rocket(x, y);
 
-  y = y - speed * acceleration;
+  velocity += acceleration;
+
+  y += velocity;
 
   if (keyIsDown(40)) {
-    acceleration = 3;
-    speed = 6;
+    acceleration = -thrust;
   } else {
-    acceleration = -2;
-    speed = 3;
-  }
-    else if (y > 450) {
-        acceleration = 0;
-        speed = 0;
-    }
+    acceleration = gravity;
   }
 
+  if ((y = 460 && velocity < 1)) {
+    acceleration = 0;
+    gravity = 0;
+    thrust = 0;
+    velocity = 0;
+  }
+}
 
+//button
+/*
+function button(x, y, w, h) {
+    rect(x, y ,w ,h);
+}
+*/
+
+// Stars
