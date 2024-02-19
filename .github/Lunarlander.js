@@ -84,55 +84,54 @@ function draw() {
     rocket(x, y);
     velocity += acceleration;
     y += velocity;
-  } else {
-    startPage(x, y);
-  }
-  // Starting the game by pressing enter
-  // Making the rocket fly with thrust
-  if (keyIsDown(40) && y < 450) {
-    // following 1 line below was adapted from chat pgt
-    acceleration = -thrust;
-    // adding flames
-    victory = false;
-  } else {
-    // If key 40 is not pressed, there will be gravity
-    // following 1 line below was adapted from chat pgt
-    acceleration = gravity;
+
+    // Starting the game by pressing enter
+    // Making the rocket fly with thrust
+    if (keyIsDown(40) && y < 450) {
+      // following 1 line below was adapted from chat pgt
+      acceleration = -thrust;
+      // adding flames
+      victory = false;
+    } else {
+      // If key 40 is not pressed, there will be gravity
+      // following 1 line below was adapted from chat pgt
+      acceleration = gravity;
+    }
+
+    // Rocket will land correctly with velocity below 1.5
+    if (y >= 450 && velocity < 1.5) {
+      rocket(250, 450);
+      velocity = 0;
+      acceleration = 0;
+      // remove flames
+      victory = true;
+      // show victory page
+      restart = true;
+    } else if (y >= 450 && velocity > 1.5) {
+      velocity = 0;
+      gameOver = true;
+      y = 100;
+      acceleration = 0;
+    }
+
+    // dont know if this is right ?????
+  } else if (!started) {
+    startPage(250, 100);
   }
 
-  // Rocket will land correctly with velocity below 1.5
-  if (y >= 450 && velocity < 1.5) {
-    y = 450;
-    velocity = 0;
-    // remove flames
-    victory = true;
-    restart = true;
-    gameOver = false;
-  } else if (y >= 450 && velocity > 1.5) {
-    victory = true;
-    restart = true;
-    gameOver = false;
-  }
-
-  // dont know if this is right ?????
   if (gameOver) {
-    endPage(x, y);
+    endPage(250, 100);
   } else if (restart) {
-    victoryPage(x, y);
+    victoryPage(250, 100);
   }
 }
-
 // restart and start game
 function keyPressed() {
   if (!started && keyIsPressed && keyCode === ENTER) {
     started = true;
-    restart = false;
   } else if (gameOver && keyIsPressed && keyCode === ENTER) {
-    gameOver = false;
-    restart = true;
+    gameOver = true;
   } else if (restart && keyIsPressed && keyCode === ENTER) {
-    started = true;
-    restart = false;
-    gameOver = false;
+    restart = true;
   }
 }
