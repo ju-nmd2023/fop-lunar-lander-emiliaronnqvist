@@ -1,9 +1,10 @@
-let started = false;
 let x = 250;
 let y = 100;
 let velocity = 0;
 let acceleration = 0;
 let gameOver = false;
+let started = false;
+let restart = false;
 // Following three lines was adapted from chat gpt
 let gravity = 0.12;
 let thrust = 0.6;
@@ -63,6 +64,14 @@ function startPage(x, y) {
 }
 
 //Victory page
+function victoryPage(x, y) {
+  background(255);
+  textAlign(CENTER, CENTER);
+  textSize(40);
+  text("Rocket landed!", x, y);
+  textSize(15);
+  text("PRESS ENTER RESTART", x, y + 50);
+}
 
 function draw() {
   if (started) {
@@ -79,10 +88,6 @@ function draw() {
     startPage(x, y);
   }
   // Starting the game by pressing enter
-  // Following 1 line below was adapted from chat gpt
-  if (keyIsPressed && keyCode === ENTER) {
-    started = true;
-  }
   // Making the rocket fly with thrust
   if (keyIsDown(40) && y < 450) {
     // following 1 line below was adapted from chat pgt
@@ -94,27 +99,40 @@ function draw() {
     // following 1 line below was adapted from chat pgt
     acceleration = gravity;
   }
-  // Show endPage if velocity higher than 1.5
-  if (gameOver) {
-    endPage(x, y);
-  }
+
   // Rocket will land correctly with velocity below 1.5
   if (y >= 450 && velocity < 1.5) {
     y = 450;
     velocity = 0;
     // remove flames
     victory = true;
+    restart = true;
+    gameOver = false;
   } else if (y >= 450 && velocity > 1.5) {
-    gameOver = true;
+    victory = true;
+    restart = true;
+    gameOver = false;
+  }
+
+  // dont know if this is right ?????
+  if (gameOver) {
+    endPage(x, y);
+  } else if (restart) {
+    victoryPage(x, y);
   }
 }
 
 // restart and start game
 function keyPressed() {
-  if (!started && keyCode === ENTER) {
+  if (!started && keyIsPressed && keyCode === ENTER) {
     started = true;
-  } else if (gameOver && keyCode === ENTER) {
+    restart = false;
+  } else if (gameOver && keyIsPressed && keyCode === ENTER) {
+    gameOver = false;
+    restart = true;
+  } else if (restart && keyIsPressed && keyCode === ENTER) {
     started = true;
+    restart = false;
     gameOver = false;
   }
 }
