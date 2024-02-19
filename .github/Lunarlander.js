@@ -106,13 +106,15 @@ function draw() {
     victory = true;
   } else if (y >= 450 && velocity > 1.5) {
     gameOver = true;
-    started = false;
   }
 }
 
-if (!started && keyIsPressed && keyCode === ENTER) {
-  started = true;
-} else if (gameOver && keyIsPressed && keyCode === ENTER) {
-  started = true;
-  gameOver = false;
+// restart and start game
+function keyPressed() {
+  if (!started && keyCode === ENTER) {
+    started = true;
+  } else if (gameOver && keyCode === ENTER) {
+    started = true;
+    gameOver = false;
+  }
 }
