@@ -46,7 +46,7 @@ function flames(x, y) {
 // Game over page
 function endPage(x, y) {
   background(0);
-  fill(250);
+  fill(255, 255, 255);
   textAlign(CENTER, CENTER);
   textSize(40);
   text("You crashed!", x, y);
@@ -56,16 +56,17 @@ function endPage(x, y) {
 // Start page
 function startPage(x, y) {
   background(255);
+  fill(0);
   textAlign(CENTER, CENTER);
   textSize(40);
   text("Lunar Lander", x, y);
   textSize(15);
   text("PRESS ENTER TO START", x, y + 50);
 }
-
 //Victory page
 function victoryPage(x, y) {
   background(255);
+  fill(0);
   textAlign(CENTER, CENTER);
   textSize(40);
   text("Rocket landed!", x, y);
@@ -101,27 +102,26 @@ function draw() {
     // Rocket will land correctly with velocity below 1.5
     if (y >= 450 && velocity < 1.5) {
       rocket(250, 450);
+      // show victory page
+      restart = true;
       velocity = 0;
       acceleration = 0;
       // remove flames
       victory = true;
-      // show victory page
-      restart = true;
-    } else if (y >= 450 && velocity > 1.5) {
+    }
+    if (y >= 450 && velocity > 1.5) {
       velocity = 0;
       gameOver = true;
       y = 100;
       acceleration = 0;
     }
-
-    // dont know if this is right ?????
   } else if (!started) {
     startPage(250, 100);
   }
-
   if (gameOver) {
     endPage(250, 100);
-  } else if (restart) {
+  }
+  if (restart) {
     victoryPage(250, 100);
   }
 }
@@ -129,9 +129,13 @@ function draw() {
 function keyPressed() {
   if (!started && keyIsPressed && keyCode === ENTER) {
     started = true;
-  } else if (gameOver && keyIsPressed && keyCode === ENTER) {
-    gameOver = true;
-  } else if (restart && keyIsPressed && keyCode === ENTER) {
-    restart = true;
+  }
+
+  if (gameOver && keyIsPressed && keyCode === ENTER) {
+    gameOver = false;
+  }
+
+  if (restart && keyIsPressed && keyCode === ENTER) {
+    started = true;
   }
 }
