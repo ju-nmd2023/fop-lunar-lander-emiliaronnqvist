@@ -101,11 +101,9 @@ function draw() {
 
     // Rocket will land correctly with velocity below 1.5
     if (y >= 450 && velocity < 1.5) {
-      rocket(250, 450);
       // show victory page
       restart = true;
-      velocity = 0;
-      acceleration = 0;
+      rocket(250, 450);
       // remove flames
       victory = true;
     }
@@ -115,7 +113,8 @@ function draw() {
       y = 100;
       acceleration = 0;
     }
-  } else if (!started) {
+  }
+  if (!started) {
     startPage(250, 100);
   }
   if (gameOver) {
@@ -127,15 +126,15 @@ function draw() {
 }
 // restart and start game
 function keyPressed() {
-  if (!started && keyIsPressed && keyCode === ENTER) {
+  if (!started && keyCode === ENTER) {
     started = true;
   }
 
-  if (gameOver && keyIsPressed && keyCode === ENTER) {
+  if (gameOver && keyCode === ENTER) {
     gameOver = false;
   }
 
-  if (restart && keyIsPressed && keyCode === ENTER) {
-    started = true;
+  if (restart && keyCode === ENTER) {
+    restart = false;
   }
 }
