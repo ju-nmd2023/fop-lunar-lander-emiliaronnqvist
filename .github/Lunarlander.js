@@ -12,6 +12,7 @@ let flamesOn = false;
 
 noStroke();
 createCanvas(500, 500);
+// Following 1 line was adapted from https://p5js.org/reference/#/p5/textStyle
 textStyle(BOLD);
 textAlign(CENTER, CENTER);
 
@@ -127,7 +128,7 @@ function draw() {
     background(21, 19, 46);
 
     // Draw flames
-    // following 2 lines was adapted from chat gpt
+    // following 1 line was adapted from chat gpt
     if (!flamesOn) {
       flames(x, y);
     }
