@@ -143,7 +143,7 @@ function draw() {
     y = y + velocity;
 
     // Making the rocket fly with thrust
-    if (keyIsDown(40) && y < 450) {
+    if (keyIsDown(40)) {
       // following 1 line below was adapted from chat pgt
       acceleration = -thrust;
       // adding flames
