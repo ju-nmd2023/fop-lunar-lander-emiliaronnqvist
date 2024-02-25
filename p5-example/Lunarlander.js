@@ -1,3 +1,10 @@
+function setup() {
+  createCanvas(500, 500);
+  // Following 1 line was adapted from https://p5js.org/reference/#/p5/textStyle
+  textStyle(BOLD);
+  textAlign(CENTER, CENTER);
+  noStroke();
+}
 let x = 250;
 let y = 100;
 let velocity = 0;
@@ -6,15 +13,9 @@ let gameOver = false;
 let started = false;
 let restart = false;
 // Following three lines was adapted from chat gpt
-let gravity = 0.11;
+let gravity = 0.1;
 let thrust = 0.6;
 let flamesOn = false;
-
-noStroke();
-createCanvas(500, 500);
-// Following 1 line was adapted from https://p5js.org/reference/#/p5/textStyle
-textStyle(BOLD);
-textAlign(CENTER, CENTER);
 
 // Following 28 lines was inspired by following youtube-tutorial https://www.youtube.com/watch?v=cl5FW_zgY_Q
 function rocket(x, y) {
@@ -155,8 +156,8 @@ function draw() {
       flamesOn = true;
     }
 
-    // Rocket will land correctly with velocity below 1.5 velocity
-    if (y >= 450 && velocity < 1.5) {
+    // Rocket will land correctly with velocity below 1.8 velocity
+    if (y >= 450 && velocity < 1.6) {
       // show victory page
       restart = true;
       rocket(250, 450);
